@@ -1,0 +1,5 @@
+(define (max3 x y z)
+    (cond ((and (< x y) (< x z)) (+ y z))
+          ((and (< y x) (< y z)) (+ x z))
+          ((and (< z x) (< z y)) (+ x y))))
+(max3 1 3 2)
