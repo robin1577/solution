@@ -33,5 +33,9 @@ def find_max_crossing_subarray(A,low,mid,high):
 A=[13,-3,-25,20,-3,-16,-23,18,20,-7,12,-5,-22,15,-4,7]
 max=find_maximum_subarray(A,0,len(A)-1)
 print(max)
+B=[-13,-3,-25,-20,-3,-16,-23,-18,-20,-7,-12,-5,-22,-15,-4,-7]
+max=find_maximum_subarray(B,0,len(B)-1)
+print(max)
+
 
     
