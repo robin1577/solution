@@ -1,0 +1,8 @@
+(define (fast-expt b n temp)
+    (cond ((= n 0) 1)
+          ((= n 1) (* b temp))
+          ((even? n) (fast-expt (square b) (/ n 2) temp))
+          (else      (fast-expt    b       (- n 1) (* b temp))))
+(define (even? n)
+    (= (remainder n 2) 0))
+(fast-expt b n 1)
