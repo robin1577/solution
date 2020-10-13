@@ -1,10 +1,20 @@
-(define (sum term next a b)
-    (if (> a b)
-        0
-        (+ (term a) 
-            (sum term next (next a) b))))
 (define (product term next a b)
     (if (> a b)
-        0
+        1
         (* (term a) 
             (product term next (next a) b))))
+(define (product-iter term next a b)
+        (define (iter a result)
+            (if(> a b)
+                result
+                (iter next(a) (* result (term a)))))
+        (iter a result))
+(define (factorial a b)
+    (define (term x)
+        (if (= (remainder x 2) 1) 
+             (/ (+ x 1) (+ x 2))
+             (/ (+ x 2) (+ x 1))))
+    (define (next x)
+        (+ x 1))
+    (* 4 (product term next a b)))
+(factorial 1 10)

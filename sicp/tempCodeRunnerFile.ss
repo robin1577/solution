@@ -1,1 +1,0 @@
-(simpson (lambda (x) (* x x x)) 0 1 100)
