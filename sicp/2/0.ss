@@ -56,8 +56,8 @@
                    (+ (upper-bound x) (upper-bound y))))
 |#
 ;lisp 提供list来生成一个序列
-(cons 1 (cons 2 (cons 3 (cons 4 nil))))
-(list 1 2 3 4)
+(cons 1 (cons 2 (cons 3 (cons 4 (list)))))
+;(list 1 2 3 4)
 (define (list-ref items n)
         (if (= n 0)
             (car item)
@@ -70,10 +70,27 @@
     (define (iter a result)
         (if (null? a)
             result
-            (iter (cdr a) (+ 1 result)))
-    (iter items 0)))
+            (iter (cdr a) (+ 1 result))))
+    (iter items 0))
 (define (append list1 list2)
     (if (null? list1)
         list2
         (cons (car list1) (append (cdr list1) list2))))
 ;map
+(define (map proc items)
+    (if (null? items)
+        (list)
+        (cons (proc (car items)) (map proc (cdr items)))))
+;(map (lambda (x) (* x x)) (list 1 2 3 4))
+;pair? lisp基本过程检查参数是否为序对
+(define (count-leaves x)
+    (cond ((null? x)       0)
+          ((not (pair? x)) 1)
+          (else (+ (count-leaves (car x)) 
+                    (count-leaves (cdr x))))))
+(define (scale-tree tree factor)
+    (map (lambda (sub-tree) 
+                    (if (pair? sub-tree)
+                        (scale-tree sub-tree factor)
+                        (* sub-tree factor))
+         tree)))
