@@ -56,7 +56,7 @@
                    (+ (upper-bound x) (upper-bound y))))
 |#
 ;lisp 提供list来生成一个序列
-(cons 1 (cons 2 (cons 3 (cons 4 (list)))))
+;(cons 1 (cons 2 (cons 3 (cons 4 (list)))))
 ;(list 1 2 3 4)
 (define (list-ref items n)
         (if (= n 0)
@@ -94,3 +94,33 @@
                         (scale-tree sub-tree factor)
                         (* sub-tree factor))
          tree)))
+;eumerate filter map accumulate
+(define (eumerate-interval low hight);枚举区间的整数
+    (if (> low high)
+            (list)
+            (cons low (enumerate-interval (+ low 1) high))))
+(define (enumerate-tree tree)
+    (cond ((null? tree) (list))
+           ((not (pair? tree)) (list tree))
+           (else (append (enumerate-tree (car tree))
+                        (enumerate-tree (cdr tree))))))
+;(enumerate-tree (list 1 (list 2) (list 3 4) 5))
+(define (filter predicate sequence);定义一个filter,接受和返回一个表
+    (cond ((null? sequence) (list))
+          ((predicate (car sequence))
+                   (cons (car sequence) (filter predicate (cdr sequence))))
+          (else (filter predicate (cdr sequence)))))
+;map
+;accumulate
+(define (accumulate op initial sequence)
+    (if (null? sequence)
+        initial
+        (op (car sequence) (accumulate op initial (cdr sequence)))))
+;重构sum-odd-squares
+(define (sum-odd-squares tree)
+    (accumulate + 0 (map (lambda (x) (* x x)) (filter odd? (enumerate-tree tree)))))
+;(sum-odd-squares (list 1 (list 2) (list 3 4) 5))
+;只含有奇数的斐波那契数列
+(define (even-fibs n)
+    (accumulate cons (list) (filter even? (map fib (enumerate-interval 0 n)))))
+
