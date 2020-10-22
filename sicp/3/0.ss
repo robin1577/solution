@@ -1,0 +1,62 @@
+(define balance 100)
+(define (withdraw amount)
+   (if (>= balance amount)
+       (begin (set! balance (- balance amount)) balance)
+       "insufficient funds"))
+#|
+(withdraw 10)
+(withdraw 10)
+;将balance定义为局部变量使得balance只能被withdraw访问
+(define new-withdraw
+    (let ((balance 100))
+         (lambda (amount) 
+                  (if (>= balance amount)
+                      (begin (set! balance (- balance amount)) balance)
+                      "insufficient funds"))))
+(define rand
+    (let ((x random-init))
+        (lambda () 
+                 (set! x (rand-update x)) 
+                 x)))
+(define (estimate-pi trials)
+    (sqrt (/ 6 (monte0carlo trials cesaro-test))))
+(define (cesaro-test)
+    (= (gcd (rand) (rand) 1)))
+;trials实验次数 experiment实验本身 返回多个试验中真的比例
+;每次调用experiment会产生不一样的感觉
+
+(define (monte-carlo trials experiment)
+    (define (iter trial-remaining trials-passed)
+        (cond ((= trials-remaining 0) (/ trials-passed trials))
+              ((experiment (iter (- trials-remaining 1) (+ trials-passed 1))
+                           (iter (- trials-remaining 1) trials-passed))))
+    (iter trials 0)))
+
+(define (cons x y)
+     (define (set-x! v) (set! x v))
+     (define (set-y! v) (set! y v))
+     (define (despath m)
+             (cond ((eq? m 'car) x)
+                   ((eq? m 'cdr) y)
+                   ((eq? m 'set-car') set-x!)
+                   ((eq? m 'set-cdr') set-y!)
+                   (else (error "undefined operation --cons") m)) 
+     dispatch)
+     (define (car z) (z 'car))
+     (define (set-car! z new-value)
+         ((z 'set-car) new-value)
+         z)
+;数字电路的模拟器
+(define a (make-wire))
+(define b (make-wire))
+(define c (make-wire))
+(define s (make-wire))
+;利用与或非实现半加器
+(define (half-adder a b s c)
+    (let ((d (make-wire))
+          (e (make-wire)))
+         (or-gate a b d)
+         (and-gate a b c)
+         (inverter c e)
+         (and-gate d e s)) 'ok)
+|#
