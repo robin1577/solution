@@ -1,0 +1,12 @@
+v r s w t x u y
+10
+v r 1
+r s 1
+s w 1
+w t 1
+w x 1
+t x 1
+t u 1
+x u 1
+x y 1
+u y 1
